@@ -11,15 +11,20 @@ updateUserBox = (data) ->
     $("#users-box").append "<li>"+user.name+"</li>"
   idx++
 
-poll = (target) ->
-  $.ajax '/users',
+updateMsgBox = (data) ->
+  for msg in data
+    $("#message-box").append "<li>"+msg.text+"</li>"
+
+poll = (path, target) ->
+  $.ajax path,
     type: "GET"
     success: (data, status, xhr) ->
       target(data)
     dataType: 'json'
     timeout: 2000
-    complete: setTimeout (-> poll(target)), 5000
+    complete: setTimeout (-> poll(path, target)), 5000
 
 $(document).on "page:change", ->
   if window.location.pathname == '/'
-    poll(updateUserBox)
+    poll('/users', updateUserBox)
+    poll('/messages', updateMsgBox)
