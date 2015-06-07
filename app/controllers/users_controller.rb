@@ -10,6 +10,10 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    respond_to do |format|
+      # TODO: should decorate user to control what we send back
+      format.json { render json: @user }
+    end
   end
 
   # GET /users/new
@@ -28,6 +32,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -64,11 +69,20 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if params[:id] == 'me'
+        if session[:user_id] != nil
+          @user = User.find(session[:user_id])
+        else
+          @user = User.new
+          # ...which will return nil fields to the caller, telling them we don't know who they are
+        end
+      else
+        @user = User.find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :hash_key)
+      params.require(:user).permit(:name)
     end
 end

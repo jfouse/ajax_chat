@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe "users/new", type: :view do
   before(:each) do
     assign(:user, User.new(
-      :name => "MyString",
-      :hash_key => "MyString"
+      :name => "MyString"
     ))
   end
 
@@ -14,8 +13,6 @@ RSpec.describe "users/new", type: :view do
     assert_select "form[action=?][method=?]", users_path, "post" do
 
       assert_select "input#user_name[name=?]", "user[name]"
-
-      assert_select "input#user_hash_key[name=?]", "user[hash_key]"
     end
   end
 end

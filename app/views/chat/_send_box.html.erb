@@ -1,3 +1,10 @@
 <div id="send-box">
-This is the send box [ ]
+
+  <%= form_tag('/messages.json', remote: true, id: 'new_message') do %>
+    <%= label_tag :text, "Enter your message" %>
+    <%= text_field(:message, :text) %>
+    <%= submit_tag('Send') %>
+
+  <% end %>
+
 </div>
