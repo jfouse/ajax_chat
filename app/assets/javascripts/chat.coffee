@@ -42,22 +42,30 @@ current_user = {
 }
 
 update_me = (data) ->
-  console.log data
   current_user['id'] = data.id
   current_user['name'] = data.name
+  $("#user-name").html data.name
 
+
+idx = 0
 new_user = () ->
-  max = 10000
-  min = 1000
-  current_user['name'] = "User" + Math.floor(Math.random() * (max - min) + min)
-  ajax.post('/users', {user: {name: current_user['name']}}, update_me, new_user)
+  if idx == 5
+    ## if I've tried five times with random names and I still keep getting collisions,
+    #  there's most likely something else wrong; time to bail
+    alert "Having trouble generating a name for you.\nSo sorry!"
+  else
+    max = 10000
+    min = 1000
+    idx++
+    current_user['name'] = "User" + Math.floor(Math.random() * (max - min) + min)
+    ajax.post('/users', {user: {name: current_user['name']}}, update_me, new_user)
+    
 
 who_am_I = () ->
   ajax.get(
     '/users/me',
     null,
     (data, status, response) ->
-      console.log data
       if data.id?
         update_me(data)
       else
@@ -75,7 +83,6 @@ update_user_box = (data) ->
     $("#users-box").append "<li>"+user.name+"</li>"
 
 update_msg_box = (data) ->
-  $("#message-box").html ""
   for msg in data
     $("#message-box").append "<li>"+msg.text+"</li>"
 

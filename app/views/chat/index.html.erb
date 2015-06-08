@@ -1,8 +1,20 @@
-<h1>Chat Room</h1>
-<p>Pull up some pixels and have a seat.</p>
-
 <div class="container">
-<%= render partial: 'users_box' %>
-<%= render partial: 'message_box' %>
-<%= render partial: 'send_box' %>
+  <div class="row">
+    <h1>Chat Room</h1>
+    <p>Hey there, <span id="user-name">Friend</span>!  Pull up some pixels and have a seat.</p>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-3">
+      <%= render partial: 'users_box' %>
+    </div>
+    <div class="col-xs-9">
+      <div class="row">
+        <%= render partial: 'message_box' %>
+      </div>
+      <div class="row">
+        <%= render partial: 'send_box' %>
+      </div>
+    </div>
+  </div>
 </div>
