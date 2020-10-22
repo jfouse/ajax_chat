@@ -23,3 +23,4 @@ Well, it's not much to look at, that's for sure.  I threw in some Bootstrap divs
 * Fix message display bug: sometimes a message shows up twice
 * Make the pretty (or at least the passably usable)
 
+Don't mind me, just here to break stuff...
